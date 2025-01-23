@@ -7,8 +7,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta name="description" content="Aeon Talk is a real-time, one-to-one voice connect app, enabling seamless and instant communication.">
 
-    <title>Call via WebRTC</title>
+    <title>Aeon Talk</title>
 
     <link rel="icon" href="{% static 'call/icons/favicon.png' %}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
@@ -99,15 +100,16 @@
         }
 
         let timecode_timer_id = -1;
-        let start_call_time = null;
+        let start_call_time = new Date();
 
         function validateTimecode() {
             const cur_call_time = new Date();
-            cur_call_time.setTime(cur_call_time - start_call_time);
+            const elapsedTime = cur_call_time - start_call_time; // Calculate elapsed time
+
+            const formattedTime = new Date(elapsedTime).toISOString().substr(14, 5); // Format time as MM:SS
 
             const timecode = document.querySelector('.timecode');
-            const hhmm = `${cur_call_time.getMinutes().toString().padStart(2, '0')}:${cur_call_time.getSeconds().toString().padStart(2, '0')}`;
-            timecode.innerText = hhmm;
+            timecode.innerText = formattedTime;
         }
 
         call_line.addOnStatusChanged(() => {
@@ -124,7 +126,6 @@
             
             start_call_time = new Date();
             timecode_timer_id = setInterval(validateTimecode, 1000);
-            validateTimecode();
 
             call_line.setAudioOutputMuted(false);
             validateVideoOverlay();
@@ -337,7 +338,7 @@
 </head>
 <body>
     <div class="main_container container mt-5 mb-5">
-        <h1 class="text-center">Call via WebRTC</h1>
+        <h1 class="text-center">Aeon Talk</h1>
         <div class="monitor row mt-4 rounded-4">
             <div class="col-6">
                 <div class="video_wrapper">
