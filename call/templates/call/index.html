@@ -64,8 +64,19 @@
 
             if (call_line.currentStatus() === CallLine.Status.Idle) {
                 call_code.disabled = false;
-                call_code.value = '';
                 btn_start_call.hidden = false;
+
+                // Check if the `code` is provided by Django template and set the value
+                const codeValue = "{% if code %}{{ code }}{% endif %}";
+
+                // If a code is available, set it and start the call automatically
+                if (codeValue) {
+                    call_code.value = codeValue;
+                    startCall();  // Trigger the start call function
+                }else{
+                    call_code.value = '';
+                }
+
             } else {
                 btn_cancel_call.hidden = false;
             }
@@ -372,7 +383,7 @@
                             <p>The call has been finished</p>
                         </div>
                         <div class="input-group call_code_form">
-                            <input id="call_code" class="form-control" type="password" placeholder="For example: secretcode123" disabled />
+                            <input id="call_code" class="form-control" type="password" placeholder="For example: secretcode123" disabled value="{% if code %}{{ code }}{% endif %}" />
                             <button id="btn_start_call" class="btn btn-outline-secondary p-1" onclick="startCall();" disabled>
                                 <img src="{% static 'call/icons/accept.png' %}" />
                             </button>
@@ -400,5 +411,20 @@
          </div>
 
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if `code` is available in the input field
+            var codeValue = document.getElementById('call_code').value;
+
+            if (codeValue) {
+                // Enable the button if code is available
+                document.getElementById('btn_start_call').disabled = false;
+
+                // Simulate the button click
+                document.getElementById('btn_start_call').click();
+            }
+        });
+    </script>
 </body>
 </html>

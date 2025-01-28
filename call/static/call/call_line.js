@@ -194,15 +194,15 @@ class CallLine {
                     iceServers: [
                         {
                             urls: [
+                                "stun:stun.1.1.1.1:3478",
+                                "stun:global.stun.twilio.com:3478",
+                                "stun:turn.numb.viagenie.ca",
+                                "stun:stun.xirsys.com",
                                 "stun:stun1.l.google.com:19302",
                                 "stun:stun2.l.google.com:19302",
                                 "stun:stun3.l.google.com:19302",
                                 "stun:stun4.l.google.com:19302",
                                 "stun:stun.services.mozilla.com",
-                                "stun:global.stun.twilio.com:3478",
-                                "stun:turn.numb.viagenie.ca",
-                                "stun:stun.1.1.1.1:3478",
-                                "stun:stun.xirsys.com"
                             ]
                         }
                     ]

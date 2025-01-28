@@ -9,10 +9,16 @@ from call.models import AbonentPair, CallLineStatus
 
 class IndexView(TemplateView):
     template_name = 'call/index.html'
-
+    
+    @csrf_exempt
+    def get_context_data(self, **kwargs):
+            context = super().get_context_data(**kwargs)
+            # The `code` from the URL is passed as part of kwargs
+            context['code'] = kwargs.get('code')
+            return context
 
 @csrf_exempt
-def callLineProcess(request):
+def callLineProcess(request, *args, **kwargs):
     if request.method == 'POST':
         data = json.loads(request.body)
         code = data.get('code')
